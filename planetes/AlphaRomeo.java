@@ -1,7 +1,7 @@
 package planetes;
 
 public class AlphaRomeo extends Planete{
-    public AlphaRomeo(String nom,int nbPlutonium, int nbThulium , int nbGadolinium , int nbTerbium , int nbNeptunium) {
+    public AlphaRomeo() {
         this.nom = "AlphaRomeo";
         this.nbPlutonium = 30;
         this.nbTerbium = 20;

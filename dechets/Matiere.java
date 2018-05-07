@@ -5,7 +5,7 @@ package dechets;
  */
 public abstract class  Matiere {
     protected String nom;
-    protected double masseVolumique;
+    protected int masseVolumique;
     protected int pourcentage;
 
     public String getNom() {
@@ -16,11 +16,11 @@ public abstract class  Matiere {
         this.nom = nom;
     }
 
-    public double getMasseVolumique() {
+    public int getMasseVolumique() {
         return masseVolumique;
     }
 
-    public void setMasseVolumique(double masseVolumique) {
+    public void setMasseVolumique(int masseVolumique) {
         this.masseVolumique = masseVolumique;
     }
 

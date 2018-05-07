@@ -2,7 +2,7 @@ package planetes;
 
 public class QuebecVenus extends Planete
 {
-    public QuebecVenus(String nom , int nbPlutonium, int nbThulium , int nbGadolinium , int nbTerbium , int nbNeptunium){
+    public QuebecVenus(){
         this.nom = "QuebecVenus";
         this.nbganolinium = 5;
         this.nbNeptunium = 20;

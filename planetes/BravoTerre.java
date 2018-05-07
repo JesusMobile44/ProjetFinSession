@@ -1,9 +1,7 @@
 package planetes;
 
 public class BravoTerre extends Planete {
-
-
-    public BravoTerre(String nom , int nbPlutonium, int nbThulium , int nbGadolinium , int nbTerbium , int nbNeptunium){
+    public BravoTerre(){
         this.nom = nom;
         this.nbganolinium = 35;
         this.nbNeptunium = 10;

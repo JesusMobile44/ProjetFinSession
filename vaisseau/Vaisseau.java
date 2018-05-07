@@ -1,5 +1,7 @@
 package vaisseau;
 
+import Centre.CentreDeTri;
+import Centre.Pile;
 import dechets.*;
 import planetes.Planete;
 
@@ -37,7 +39,7 @@ public abstract class Vaisseau {
         this.nom = nom;
     }
 
-    public void remplir(Vaisseau vaisseau, Planete planete){
+    public void remplir(Planete planete){
         Random choix = new Random();
         int chanceGalo = planete.getNbganolinium();
         int chanceNept = planete.getNbNeptunium();
@@ -49,24 +51,188 @@ public abstract class Vaisseau {
         for (int i = 0; i < 100;i++){
             probabilite[i] = i;
         }
-        for (int i =0; i< vaisseau.maxCapacite;i++){
+        for (int i =0; i< this.maxCapacite;i++){
             index = choix.nextInt(100);
             if (index < chanceGalo){
-                vaisseau.cargo.add(new Gadolinium());
+                this.cargo.add(new Gadolinium());
             }
             else if (index >= chanceGalo && index < (chanceGalo+chanceNept)){
-                vaisseau.cargo.add(new Neptunium());
+                this.cargo.add(new Neptunium());
             }
             else if (index >= (chanceGalo+chanceNept) && index < (chanceGalo+chanceNept+chancePlut)){
-                vaisseau.cargo.add(new Plutonium());
+                this.cargo.add(new Plutonium());
             }
             else if (index >= (chanceGalo+chanceNept+chancePlut) && index < (chanceGalo+chanceNept+chancePlut+chanceTerb)){
-                vaisseau.cargo.add(new Terbium());
+                this.cargo.add(new Terbium());
             }
             else if (index >= (chanceGalo+chanceNept+chancePlut+chanceTerb) && index <100){
-                vaisseau.cargo.add(new Thulium());
+                this.cargo.add(new Thulium());
             }
         }
     }
-}
+    //TRI Des ressources avant le dépot
+    public void triAvantLeDépot()
+    {
+        int elementNonTrié[] = new int[this.maxCapacite];
+        for (int i=0; i <this.maxCapacite;i++){
+            if (this.cargo.get(i).getMasseVolumique() == new Gadolinium().getMasseVolumique()){
+                elementNonTrié[i] = new Gadolinium().getMasseVolumique();
+            }
+            if (this.cargo.get(i).getMasseVolumique() == new Plutonium().getMasseVolumique()){
+                elementNonTrié[i] = new Plutonium().getMasseVolumique();
+            }
+            if (this.cargo.get(i).getMasseVolumique() == new Neptunium().getMasseVolumique()){
+                elementNonTrié[i] = new Neptunium().getMasseVolumique();
+            }
+            if (this.cargo.get(i).getMasseVolumique() == new Thulium().getMasseVolumique()){
+                elementNonTrié[i] = new Thulium().getMasseVolumique();
+            }
+            if (this.cargo.get(i).getMasseVolumique() == new Terbium().getMasseVolumique()){
+                elementNonTrié[i] = new Terbium().getMasseVolumique();
+            }
+        }
+        int N = elementNonTrié.length;
+        if (N == 0)
+            return;
+        int max = elementNonTrié[0], min = elementNonTrié[0];
+        for (int i = 1; i < N; i++)
+        {
+            if (elementNonTrié[i] > max){
+                max = elementNonTrié[i];
+            }
+            if (elementNonTrié[i] < min){
+                min = elementNonTrié[i];
+            }
+        }
+        int écart = max - min + 1;
+        int[] count = new int[écart];
+        for (int i = 0; i < N; i++){
+            count[elementNonTrié[i] - min]++;
+        }
+        for (int i = 1; i < écart; i++){
+            count[i] += count[i - 1];
+        }
+        int j = 0;
+        for (int i = 0; i < écart; i++){
+            while (j < count[i])
+                elementNonTrié[j++] = i + min;
+        }
+        for (int i = 0; i <this.maxCapacite;i++){
+            if (elementNonTrié[i] == new Gadolinium().getMasseVolumique() )
+                this.cargo.set(i,new Gadolinium());
 
+            if (elementNonTrié[i] == new Plutonium().getMasseVolumique())
+                this.cargo.set(i,new Plutonium());
+
+            if (elementNonTrié[i] == new Neptunium().getMasseVolumique())
+                this.cargo.set(i,new Neptunium());
+
+            if (elementNonTrié[i] == new Terbium().getMasseVolumique())
+                this.cargo.set(i,new Terbium());
+
+            if (elementNonTrié[i] == new Thulium().getMasseVolumique())
+                this.cargo.set(i, new Thulium());
+        }
+    }
+    public void depot (CentreDeTri centreDeTri)
+    {
+        this.triAvantLeDépot();
+
+        for(int i=0;i< this.maxCapacite ;i++){
+            if (this.getCargo().get(i) instanceof Gadolinium){
+                Pile pile =centreDeTri.getMapPile().get("Gadolinium");
+                if (pile.getPile().size()<pile.getMax()){
+                    pile.getPile().push(this.getCargo().get(i));
+                }
+                else{
+                    centreDeTri.recyclerPile(pile);
+                }
+            }
+            if (this.getCargo().get(i) instanceof Neptunium){
+                Pile pile =centreDeTri.getMapPile().get("Neptunium");
+                if (pile.getPile().size()<pile.getMax()){
+                    pile.getPile().push(this.getCargo().get(i));
+                }
+                else{
+                    centreDeTri.recyclerPile(pile);
+                }
+            }
+            if (this.getCargo().get(i) instanceof Plutonium){
+                Pile pile =centreDeTri.getMapPile().get("Plutonium");
+                if (pile.getPile().size()<centreDeTri.getMapPile().get("Plutonium").getMax()){
+                    pile.getPile().push(this.getCargo().get(i));
+                }
+                else{
+                    centreDeTri.recyclerPile(pile);
+                }
+            }
+            if (this.getCargo().get(i) instanceof Terbium){
+                Pile pile =centreDeTri.getMapPile().get("Terbium");
+                if (pile.getPile().size()<pile.getMax()){
+                    centreDeTri.getMapPile().get("Terbium").getPile().push(this.getCargo().get(i));
+                }
+                else{
+                    centreDeTri.recyclerPile(pile);
+                }
+            }
+            if (this.getCargo().get(i) instanceof Thulium){
+                Pile pile =centreDeTri.getMapPile().get("Thulium");
+                if (pile.getPile().size()<pile.getMax()){
+                    pile.getPile().push(this.getCargo().get(i));
+                }
+                else{
+                    centreDeTri.recyclerPile(pile);
+                }
+            }
+
+            /*if (this.cargo.get(i) instanceof Gadolinium);{
+                if (centreDeTri.getQuantitéMinGado() < centreDeTri.getQuantitéMaxGado()){
+                    centreDeTri.setQuantitéMinGado(centreDeTri.getQuantitéMinGado()+1);
+                }
+                else if (centreDeTri.getQuantitéMinGado() == centreDeTri.getQuantitéMaxGado()){
+                    recycler(centreDeTri , centreDeTri.getQuantitéMaxGado());
+                }
+            }
+
+            if (vaisseau.cargo.get(i) instanceof Neptunium);{
+
+                if (centreDeTri.getQuantitéMinNeptu() < centreDeTri.getQuantitéMaxNeptu()){
+                    centreDeTri.setQuantitéMinNeptu(centreDeTri.getQuantitéMinNeptu()+1);
+                }
+                else if (centreDeTri.getQuantitéMinNeptu() == centreDeTri.getQuantitéMaxNeptu()){
+                    recycler(centreDeTri,centreDeTri.getQuantitéMaxNeptu());
+                }
+
+            }
+
+            if (vaisseau.cargo.get(i) instanceof Plutonium);{
+                if (centreDeTri.getQuantitéMinPluto() < centreDeTri.getQuantitéMaxPluto()){
+                    centreDeTri.setQuantitéMinPluto(centreDeTri.getQuantitéMinPluto()+1);
+                }
+                else if (centreDeTri.getQuantitéMinPluto() == centreDeTri.getQuantitéMaxPluto()){
+                    recycler(centreDeTri,centreDeTri.getQuantitéMaxPluto());
+                }
+            }
+
+            if (vaisseau.cargo.get(i) instanceof Terbium);{
+                if (centreDeTri.getQuantitéMinTher() < centreDeTri.getQuantitéMaxTher()){
+                    centreDeTri.setQuantitéMinTher(centreDeTri.getQuantitéMinTher()+1);
+                }
+                if (centreDeTri.getQuantitéMinTher() == centreDeTri.getQuantitéMaxTher()){
+                    recycler(centreDeTri,centreDeTri.getQuantitéMaxTher());
+                }
+            }
+
+            if (vaisseau.cargo.get(i) instanceof Thulium);{
+                if (centreDeTri.getQuantitéMinThul() < centreDeTri.getQuantitéMaxThul()){
+                    centreDeTri.setQuantitéMinThul(centreDeTri.getQuantitéMinThul()+1);
+                }
+                if (centreDeTri.getQuantitéMinThul() == centreDeTri.getQuantitéMaxThul()){
+                    recycler(centreDeTri,centreDeTri.getQuantitéMaxThul());
+                }
+            }*/
+        }
+
+
+    }
+}

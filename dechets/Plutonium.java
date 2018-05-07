@@ -6,7 +6,7 @@ package dechets;
 public class Plutonium extends Matiere {
     public Plutonium() {
         this.nom = "Plutunium";
-        this.masseVolumique = 244.06;
+        this.masseVolumique = 244;
         this.pourcentage = 47;
     }
 }

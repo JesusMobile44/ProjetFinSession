@@ -6,7 +6,7 @@ package dechets;
 public class Gadolinium extends Matiere{
     public Gadolinium() {
         this.nom = "Gadolinium";
-        this.masseVolumique = 157.25;
+        this.masseVolumique = 157;
         this.pourcentage = 28;
     }
 }

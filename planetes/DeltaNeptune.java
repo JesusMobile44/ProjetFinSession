@@ -1,7 +1,7 @@
 package planetes;
 
 public class DeltaNeptune extends Planete  {
-    public DeltaNeptune(String nom , int nbPlutonium, int nbThulium , int nbGadolinium , int nbTerbium , int nbNeptunium){
+    public DeltaNeptune(){
         this.nom = nom;
         this.nbganolinium = 15;
         this.nbNeptunium = 20;
