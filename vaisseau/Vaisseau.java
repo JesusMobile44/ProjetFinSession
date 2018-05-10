@@ -184,55 +184,7 @@ public abstract class Vaisseau {
                     centreDeTri.recyclerPile(pile);
                 }
             }
-
-            /*if (this.cargo.get(i) instanceof Gadolinium);{
-                if (centreDeTri.getQuantitéMinGado() < centreDeTri.getQuantitéMaxGado()){
-                    centreDeTri.setQuantitéMinGado(centreDeTri.getQuantitéMinGado()+1);
-                }
-                else if (centreDeTri.getQuantitéMinGado() == centreDeTri.getQuantitéMaxGado()){
-                    recycler(centreDeTri , centreDeTri.getQuantitéMaxGado());
-                }
-            }
-
-            if (vaisseau.cargo.get(i) instanceof Neptunium);{
-
-                if (centreDeTri.getQuantitéMinNeptu() < centreDeTri.getQuantitéMaxNeptu()){
-                    centreDeTri.setQuantitéMinNeptu(centreDeTri.getQuantitéMinNeptu()+1);
-                }
-                else if (centreDeTri.getQuantitéMinNeptu() == centreDeTri.getQuantitéMaxNeptu()){
-                    recycler(centreDeTri,centreDeTri.getQuantitéMaxNeptu());
-                }
-
-            }
-
-            if (vaisseau.cargo.get(i) instanceof Plutonium);{
-                if (centreDeTri.getQuantitéMinPluto() < centreDeTri.getQuantitéMaxPluto()){
-                    centreDeTri.setQuantitéMinPluto(centreDeTri.getQuantitéMinPluto()+1);
-                }
-                else if (centreDeTri.getQuantitéMinPluto() == centreDeTri.getQuantitéMaxPluto()){
-                    recycler(centreDeTri,centreDeTri.getQuantitéMaxPluto());
-                }
-            }
-
-            if (vaisseau.cargo.get(i) instanceof Terbium);{
-                if (centreDeTri.getQuantitéMinTher() < centreDeTri.getQuantitéMaxTher()){
-                    centreDeTri.setQuantitéMinTher(centreDeTri.getQuantitéMinTher()+1);
-                }
-                if (centreDeTri.getQuantitéMinTher() == centreDeTri.getQuantitéMaxTher()){
-                    recycler(centreDeTri,centreDeTri.getQuantitéMaxTher());
-                }
-            }
-
-            if (vaisseau.cargo.get(i) instanceof Thulium);{
-                if (centreDeTri.getQuantitéMinThul() < centreDeTri.getQuantitéMaxThul()){
-                    centreDeTri.setQuantitéMinThul(centreDeTri.getQuantitéMinThul()+1);
-                }
-                if (centreDeTri.getQuantitéMinThul() == centreDeTri.getQuantitéMaxThul()){
-                    recycler(centreDeTri,centreDeTri.getQuantitéMaxThul());
-                }
-            }*/
+            centreDeTri.filePourAttendre(this);
         }
-
-
     }
 }

@@ -5,9 +5,7 @@ import planetes.*;
 import vaisseau.Vaisseau;
 
 import java.io.File;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Stack;
+import java.util.*;
 
 /**
  * Created by BelSi1731422 on 2018-05-03.
@@ -15,6 +13,28 @@ import java.util.Stack;
 public class CentreDeTri {
     private HashMap<String,Pile> mapPile;
     private File fileVaisseau;
+    private CentreDeTri next;
+
+    public static CentreDeTri créationCentres(){
+        CentreDeTri[] centreDeTri = new CentreDeTri[5];
+        for (int i=0;i<5;i++){
+            try {
+                try{
+                    centreDeTri[i].next = centreDeTri[i+1];
+                }catch (NullPointerException e ){
+
+                }
+
+            }catch (IndexOutOfBoundsException e){
+                System.out.println("Il y a 5 centre de tri");
+            }
+
+
+        }
+        return centreDeTri[0];
+    }
+
+
 
     public HashMap<String, Pile> getMapPile() {
         return mapPile;
@@ -62,10 +82,16 @@ public class CentreDeTri {
     public CentreDeTri(){
         this.mapPile = creerHashMap();
     }
+    private ArrayList<Matiere> pileTempo = new ArrayList<>();
+
 
 
     public void recyclerPile(Pile pile){
-        
+        int pourcentage =((pile.getPile().get(0).getPourcentage()/100)*pile.getMax());
+        for (int i=0;i<pourcentage;i++){
+            this.pileTempo.add(pile.getPile().get(0));
+            pile.getPile().remove(0);
+        }
     }
     public void charger(Vaisseau vaisseau){
         for (int i=vaisseau.getMaxCapacite()-1;i>=0;i--){
@@ -85,5 +111,29 @@ public class CentreDeTri {
         map.put("Terbium",new Pile("Terbium"));
         map.put("Thulium",new Pile("Thulium"));
         return map;
+    }
+    public void filePourAttendre (Vaisseau vaisseau){
+        if (fileDattente.size() < 10){
+            fileDattente.add(vaisseau);
+        }
+
+        else if (fileDattente.size() == 10){
+            if (pileTempo.size()>0){
+                while(pileTempo.size()>0&&vaisseau.getCargo().size()<vaisseau.getMaxCapacite()){
+                    vaisseau.getCargo().add(pileTempo.get(0));
+                    pileTempo.remove(0);
+                }
+                //envoyer vers le prochain centre
+            }
+            else{
+                Random choix = new Random();
+                fileDattente.peek().remplir(listeDesPlanètes[choix.nextInt(5)]);
+                fileDattente.remove(0);
+                fileDattente.add(vaisseau);
+            }
+        }
+    }
+    public void envoyerProchainCentre(CentreDeTri centreDeTri){
+        CentreDeTri apres;
     }
 }

@@ -7,6 +7,6 @@ public class Gadolinium extends Matiere{
     public Gadolinium() {
         this.nom = "Gadolinium";
         this.masseVolumique = 157;
-        this.pourcentage = 28;
+        this.pourcentage = 12;
     }
 }

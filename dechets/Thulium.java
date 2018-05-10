@@ -7,6 +7,6 @@ public class Thulium extends Matiere {
     public Thulium() {
         this.nom = "Thulium";
         this.masseVolumique = 169;
-        this.pourcentage = 33;
+        this.pourcentage = 26;
     }
 }

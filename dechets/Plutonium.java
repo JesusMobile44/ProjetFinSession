@@ -7,6 +7,6 @@ public class Plutonium extends Matiere {
     public Plutonium() {
         this.nom = "Plutunium";
         this.masseVolumique = 244;
-        this.pourcentage = 47;
+        this.pourcentage = 38;
     }
 }
