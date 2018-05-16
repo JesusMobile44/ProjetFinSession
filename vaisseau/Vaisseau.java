@@ -4,7 +4,6 @@ import Centre.CentreDeTri;
 import Centre.Pile;
 import dechets.*;
 import planetes.Planete;
-
 import java.util.*;
 
 /**
@@ -14,6 +13,7 @@ public abstract class Vaisseau {
     protected ArrayList<Matiere> cargo;
     protected int maxCapacite;
     protected String nom;
+    protected int centre;
 
     public ArrayList<Matiere> getCargo() {
         return cargo;
@@ -38,6 +38,15 @@ public abstract class Vaisseau {
     public void setNom(String nom) {
         this.nom = nom;
     }
+
+    public int getCentre() {
+        return centre;
+    }
+
+    public void setCentre(int centre) {
+        this.centre = centre;
+    }
+
 
     public void remplir(Planete planete){
         Random choix = new Random();
@@ -145,7 +154,7 @@ public abstract class Vaisseau {
                     pile.getPile().push(this.getCargo().get(i));
                 }
                 else{
-                    centreDeTri.recyclerPile(pile);
+                    centreDeTri.recyclerPile(this,pile,centreDeTri);
                 }
             }
             if (this.getCargo().get(i) instanceof Neptunium){
@@ -154,7 +163,7 @@ public abstract class Vaisseau {
                     pile.getPile().push(this.getCargo().get(i));
                 }
                 else{
-                    centreDeTri.recyclerPile(pile);
+                    centreDeTri.recyclerPile(this,pile,centreDeTri);
                 }
             }
             if (this.getCargo().get(i) instanceof Plutonium){
@@ -163,7 +172,7 @@ public abstract class Vaisseau {
                     pile.getPile().push(this.getCargo().get(i));
                 }
                 else{
-                    centreDeTri.recyclerPile(pile);
+                    centreDeTri.recyclerPile(this,pile,centreDeTri);
                 }
             }
             if (this.getCargo().get(i) instanceof Terbium){
@@ -172,7 +181,7 @@ public abstract class Vaisseau {
                     centreDeTri.getMapPile().get("Terbium").getPile().push(this.getCargo().get(i));
                 }
                 else{
-                    centreDeTri.recyclerPile(pile);
+                    centreDeTri.recyclerPile(this,pile,centreDeTri);
                 }
             }
             if (this.getCargo().get(i) instanceof Thulium){
@@ -181,7 +190,7 @@ public abstract class Vaisseau {
                     pile.getPile().push(this.getCargo().get(i));
                 }
                 else{
-                    centreDeTri.recyclerPile(pile);
+                    centreDeTri.recyclerPile(this,pile,centreDeTri);
                 }
             }
             centreDeTri.filePourAttendre(this);

@@ -8,7 +8,8 @@ import java.util.LinkedList;
  */
 public class Main {
     public static void main(String[] args) {
-        CentreDeTri.créationCentres();
-
+        LinkedList<CentreDeTri> listeCentreDeTris = new LinkedList<>();
+        CentreDeTri.créationCentres(listeCentreDeTris);
+        
     }
 }

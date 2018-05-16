@@ -11,29 +11,20 @@ import java.util.*;
  * Created by BelSi1731422 on 2018-05-03.
  */
 public class CentreDeTri {
-    private HashMap<String,Pile> mapPile;
+    private HashMap<String,Pile> mapPile = creerHashMap();
     private File fileVaisseau;
     private CentreDeTri next;
+    private int nbCentre;
+    LinkedList<Vaisseau> fileDattente = new LinkedList<Vaisseau>();
+    protected Planete[] listeDesPlanètes = {new AlphaRomeo() , new BravoTerre(), new CharlieJupiter(), new DeltaNeptune() , new QuebecVenus()};
+    protected LinkedList<CentreDeTri> listeCentreDeTris = new LinkedList<>();
 
-    public static CentreDeTri créationCentres(){
-        CentreDeTri[] centreDeTri = new CentreDeTri[5];
-        for (int i=0;i<5;i++){
-            try {
-                try{
-                    centreDeTri[i].next = centreDeTri[i+1];
-                }catch (NullPointerException e ){
-
-                }
-
-            }catch (IndexOutOfBoundsException e){
-                System.out.println("Il y a 5 centre de tri");
-            }
-
-
+    public static void créationCentres(LinkedList<CentreDeTri> listeCentreDeTris){
+        int nbCentre = 5;
+        for (int i=0;i<nbCentre;i++){
+            listeCentreDeTris.add(new CentreDeTri());
         }
-        return centreDeTri[0];
     }
-
 
 
     public HashMap<String, Pile> getMapPile() {
@@ -68,40 +59,42 @@ public class CentreDeTri {
         this.listeDesPlanètes = listeDesPlanètes;
     }
 
-    public LinkedList<CentreDeTri> getCentreDeTris() {
-        return centreDeTris;
+    public LinkedList<CentreDeTri> getListeCentreDeTris() {
+        return listeCentreDeTris;
     }
 
-    public void setCentreDeTris(LinkedList<CentreDeTri> centreDeTris) {
-        this.centreDeTris = centreDeTris;
+    public void setListeCentreDeTris(LinkedList<CentreDeTri> listeCentreDeTris) {
+        this.listeCentreDeTris = listeCentreDeTris;
     }
 
-    LinkedList<Vaisseau> fileDattente = new LinkedList<Vaisseau>();
-    protected Planete[] listeDesPlanètes = {new AlphaRomeo() , new BravoTerre(), new CharlieJupiter(), new DeltaNeptune() , new QuebecVenus()};
-    protected LinkedList<CentreDeTri> centreDeTris = new LinkedList<>();
-    public CentreDeTri(){
-        this.mapPile = creerHashMap();
-    }
+
     private ArrayList<Matiere> pileTempo = new ArrayList<>();
 
 
 
-    public void recyclerPile(Pile pile){
-        int pourcentage =((pile.getPile().get(0).getPourcentage()/100)*pile.getMax());
-        for (int i=0;i<pourcentage;i++){
-            this.pileTempo.add(pile.getPile().get(0));
-            pile.getPile().remove(0);
+    public void recyclerPile(Vaisseau vaisseau,Pile pile,CentreDeTri autreCentre){
+        int nbTorRecycle =((pile.getPile().peek().getPourcentage()/100)*pile.getMax());
+        for (int i=0;i<nbTorRecycle;i++){
+            vaisseau.getCargo().add(pile.getPile().pop());
+            if (vaisseau.getCargo().size() == vaisseau.getMaxCapacite()){
+                i=nbTorRecycle;
+            }
         }
+        vaisseau.setCentre(vaisseau.getCentre()+1);
+        vaisseau.depot(listeCentreDeTris.get(vaisseau.getCentre()));
     }
-    public void charger(Vaisseau vaisseau){
+    /*public void decharger(Vaisseau vaisseau){
+        fileDattente.add(vaisseau);
+        vaisseau.triAvantLeDépot();
+        for (int i=0;i<)
         for (int i=vaisseau.getMaxCapacite()-1;i>=0;i--){
             Pile pileTemp = mapPile.get(vaisseau.getCargo().get(i).getNom());
             if (pileTemp.getPile().size()==pileTemp.getMax()-1){
-                recyclerPile(pileTemp);
+                recyclerPile(vaisseau);
             }
             mapPile.get(vaisseau.getCargo().get(i).getNom()).getPile().add(vaisseau.getCargo().get(i));
         }
-    }
+    }*/
 
     public HashMap<String,Pile> creerHashMap(){
         HashMap<String,Pile> map  = new HashMap<>();
